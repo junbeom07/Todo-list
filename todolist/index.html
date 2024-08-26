@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="container">
+      <header>
+        <h1>Todo List</h1>
+      </header>
+      <section>
+        <ul id="todo-list"></ul>
+      </section>
+      <footer>
+        <input type="text" id="input-task" placeholder="할 일을 입력하세요.">
+        <button id="btn-add">추가</button>
+      </footer>
+    </div>
+    <script>
+        function 투두입력받기(){
+            let todoText = document.querySelector("#input-task").value;
+            let selectedUl = document.querySelector("#todo-list");
+            
+            if(todoText !== ""){
+                let newLi = document.createElement("li");
+                newLi.textContent = todoText;
+                selectedUl.appendChild(newLi);
+                document.querySelector("#input-task").value = "";
+                
+                // "할 일이 없음" 메시지가 있을 경우 삭제
+                let noTaskMsg = document.querySelector("#no-task-msg");
+                if (noTaskMsg) {
+                    selectedUl.removeChild(noTaskMsg);
+                }
+            } else {
+                alert("내용을 입력하세요.");
+            }
+        }
+
+        document.querySelector("#btn-add").addEventListener("click", 투두입력받기);
+
+        function init(){
+            let todoListUl = document.querySelector("#todo-list");
+
+            if(todoListUl.childElementCount < 1){
+                let noTaskLi = document.createElement("li");
+                noTaskLi.id = "no-task-msg";
+                noTaskLi.textContent = "할 일이 없음";
+                todoListUl.appendChild(noTaskLi);
+            }
+        }
+
+        init();
+    </script>
+</body>
+</html>

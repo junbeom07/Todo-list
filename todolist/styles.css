@@ -1,71 +1,76 @@
+/* styles.css */
+
+/* 전체 페이지의 스타일 */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    font-family: Arial, sans-serif; /* 폰트 스타일 설정 */
+    background-color: #ffffff   ; /* 배경 색상 */
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
 }
 
+/* 컨테이너 스타일 */
 #container {
-    width: 100%;
-    max-width: 500px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    overflow: hidden;
+    width: 90%;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
+/* 헤더 스타일 */
 header {
-    background-color: #3498db;
-    color: white;
-    padding: 15px;
+    background-color: #FF9800; /* 파란색 배경 */
+    color: white; /* 텍스트 색상 흰색 */
+    padding: 10px;
     text-align: center;
 }
 
-#todo-list {
-    list-style-type: none;
-    margin: 0;
+/* 섹션 스타일 */
+section {
+    background-color: #fff53b; /* 연한 노란색 배경 */
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* 약간의 그림자 */
+}
+
+/* 목록 스타일 */
+ul {
+    list-style: none; /* 기본 리스트 스타일 제거 */
     padding: 0;
+    margin: 0;
 }
 
-#todo-list li {
-    border-bottom: 1px solid #ccc;
-    padding: 10px;
-    color: #333;
+/* 목록 항목 스타일 */
+li {
+    padding: 8px;
+    border-bottom: 1px solid #ccc; /* 하단 경계선 */
 }
 
-#todo-list li:last-child {
-    border-bottom: none;
-}
-
+/* 풋터 스타일 */
 footer {
+    margin-top: 10px;
     display: flex;
-    padding: 10px;
-    background-color: #eee;
+    justify-content: space-between;
+    align-items: center;
 }
 
+/* 입력 상자 스타일 */
 #input-task {
-    flex: 1;
-    padding: 10px;
+    width: 80%;
+    padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    margin-right: 10px;
-    font-size: 16px;
 }
 
+/* 추가 버튼 스타일 */
 #btn-add {
-    padding: 10px 20px;
-    background-color: #3498db;
-    color: white;
+    padding: 8px 12px;
+    background-color: #FF9800; /* 연한 주황색 배경 */
+    color: white; /* 텍스트 색상 흰색 */
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 16px;
 }
 
+/* 추가 버튼에 마우스 오버 시 스타일 */
 #btn-add:hover {
-    background-color: #2980b9;
+    background-color: #F57C00; /* 약간 더 어두운 주황색 */
 }

@@ -4,32 +4,206 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo List</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* 전체 페이지의 스타일 */
+        body {
+            font-family: Arial, sans-serif; /* 폰트 스타일 설정 */
+            background-color: #ffffff; /* 배경 색상 */
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* 컨테이너 스타일 */
+        #container {
+            width: 90%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* 헤더 스타일 */
+        header {
+            background-color: #28347e; /* 파란색 배경 */
+            color: white; /* 텍스트 색상 흰색 */
+            padding: 10px;
+            text-align: center;
+        }
+        
+        /* 섹션 스타일 */
+        section {
+            background-color: #fcf79b; /* 연한 노란색 배경 */
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* 약간의 그림자 */
+        }
+        
+        /* 목록 스타일 */
+        ul {
+            list-style: none; /* 기본 리스트 스타일 제거 */
+            padding: 0;
+            margin: 0;
+        }
+        
+        /* 목록 항목 스타일 */
+        li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px;
+            border-bottom: 1px solid #ccc; /* 하단 경계선 */
+            gap: 10px; /* 목록 내용과 버튼 사이의 간격 */
+        }
+
+        /* 체크박스 스타일 */
+        .todo-checkbox {
+            margin-right: 10px;
+        }
+        
+        /* 목록 내용 스타일 */
+        .todo-text {
+            background-color: #fcf79b;
+            border: none; /* 테두리 제거 */
+            flex-grow: 1;
+            cursor: pointer; /* 마우스 포인터를 텍스트로 변경 */
+            color: black; /* 텍스트 색상 */
+        }
+        
+        /* 체크박스가 체크된 상태일 때 목록 항목의 배경색과 텍스트 색상 변경 */
+        .checked .todo-text {
+            background-color: #5f5d5d; /* 어두운 노란색 배경 */
+            color: rgb(149, 149, 149); /* 텍스트 색상 흰색 */
+        }
+        
+        /* 버튼 컨테이너 스타일 */
+        .btn-container {
+            display: flex;
+            gap: 5px;
+        }
+
+        /* 삭제 및 수정 버튼 스타일 */
+        .btn-delete, .btn-edit {
+            padding: 4px 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: white;
+            color: #333;
+        }
+
+        /* 삭제 버튼 스타일 */
+        .btn-delete {
+            color: #f44336; /* 빨간색 텍스트 */
+        }
+
+        /* 수정 버튼 스타일 */
+        .btn-edit {
+            color: #2196F3; /* 파란색 텍스트 */
+        }
+
+        /* 버튼 호버 시 스타일 */
+        .btn-delete:hover, .btn-edit:hover {
+            background-color: #f0f0f0; /* 연한 회색 배경 */
+        }
+
+        /* 풋터 스타일 */
+        footer {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        /* 입력 상자 스타일 */
+        #input-task {
+            width: 80%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        /* 추가 버튼 스타일 */
+        #btn-add {
+            padding: 8px 12px;
+            background-color: #FF9800; /* 연한 주황색 배경 */
+            color: white; /* 텍스트 색상 흰색 */
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        /* 추가 버튼에 마우스 오버 시 스타일 */
+        #btn-add:hover {
+            background-color: #F57C00; /* 약간 더 어두운 주황색 */
+        }
+    </style>
 </head>
 <body>
     <div id="container">
-      <header>
-        <h1>Todo List</h1>
-      </header>
-      <section>
-        <ul id="todo-list"></ul>
-      </section>
-      <footer>
-        <input type="text" id="input-task" placeholder="할 일을 입력하세요.">
-        <button id="btn-add">추가</button>
-      </footer>
+        <header>
+            <h1>Todo List</h1>
+        </header>
+        <section>
+            <ul id="todo-list"></ul>
+        </section>
+        <footer>
+            <input type="text" id="input-task" placeholder="할 일을 입력하세요.">
+            <button id="btn-add">추가</button>
+        </footer>
     </div>
     <script>
-        function 투두입력받기(){
+        function 투두입력받기() {
             let todoText = document.querySelector("#input-task").value;
             let selectedUl = document.querySelector("#todo-list");
-            
-            if(todoText !== ""){
+
+            if (todoText !== "") {
                 let newLi = document.createElement("li");
-                newLi.textContent = todoText;
+
+                // 체크박스 생성
+                let checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.className = "todo-checkbox";
+                checkbox.addEventListener("change", function() {
+                    if (checkbox.checked) {
+                        newLi.classList.add("checked");
+                    } else {
+                        newLi.classList.remove("checked");
+                    }
+                });
+                newLi.appendChild(checkbox);
+
+                // 할 일 텍스트 생성
+                let textSpan = document.createElement("span");
+                textSpan.className = "todo-text";
+                textSpan.textContent = todoText;
+                newLi.appendChild(textSpan);
+
+                // 버튼 컨테이너 생성
+                let btnContainer = document.createElement("div");
+                btnContainer.className = "btn-container";
+
+                // 삭제 버튼 생성
+                let deleteBtn = document.createElement("button");
+                deleteBtn.className = "btn-delete";
+                deleteBtn.textContent = "삭제";
+                deleteBtn.addEventListener("click", function() {
+                    selectedUl.removeChild(newLi);
+                    init(); // 리스트가 비어 있으면 "할 일이 없음" 메시지 추가
+                });
+                btnContainer.appendChild(deleteBtn);
+
+                // 수정 버튼 생성
+                let editBtn = document.createElement("button");
+                editBtn.className = "btn-edit";
+                editBtn.textContent = "수정";
+                editBtn.addEventListener("click", function() {
+                    editTodoItem(textSpan, editBtn);
+                });
+                btnContainer.appendChild(editBtn);
+
+                newLi.appendChild(btnContainer);
                 selectedUl.appendChild(newLi);
+
                 document.querySelector("#input-task").value = "";
-                
+
                 // "할 일이 없음" 메시지가 있을 경우 삭제
                 let noTaskMsg = document.querySelector("#no-task-msg");
                 if (noTaskMsg) {
@@ -40,12 +214,45 @@
             }
         }
 
+        function editTodoItem(textSpan, editBtn) {
+            if (editBtn.textContent === "수정") {
+                // 현재 텍스트를 인풋 필드로 바꾸기
+                let currentText = textSpan.textContent;
+                let inputField = document.createElement("input");
+                inputField.type = "text";
+                inputField.value = currentText;
+                inputField.className = "todo-text";
+                textSpan.replaceWith(inputField);
+                inputField.focus();
+                editBtn.textContent = "저장";
+
+                // 인풋 필드에 포커스 주기
+                inputField.addEventListener("blur", function() {
+                    // 인풋 필드를 텍스트로 다시 바꾸기
+                    let updatedText = inputField.value;
+                    let newTextSpan = document.createElement("span");
+                    newTextSpan.className = "todo-text";
+                    newTextSpan.textContent = updatedText;
+                    inputField.replaceWith(newTextSpan);
+                    editBtn.textContent = "수정";
+                });
+            } else {
+                // 이미 텍스트로 바꾼 상태에서 저장 클릭 시 처리
+                let updatedText = textSpan.textContent;
+                let newTextSpan = document.createElement("span");
+                newTextSpan.className = "todo-text";
+                newTextSpan.textContent = updatedText;
+                textSpan.replaceWith(newTextSpan);
+                editBtn.textContent = "수정";
+            }
+        }
+
         document.querySelector("#btn-add").addEventListener("click", 투두입력받기);
 
-        function init(){
+        function init() {
             let todoListUl = document.querySelector("#todo-list");
 
-            if(todoListUl.childElementCount < 1){
+            if (todoListUl.childElementCount < 1) {
                 let noTaskLi = document.createElement("li");
                 noTaskLi.id = "no-task-msg";
                 noTaskLi.textContent = "할 일이 없음";
